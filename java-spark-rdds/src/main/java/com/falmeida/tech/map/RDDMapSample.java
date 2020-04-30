@@ -23,8 +23,7 @@ public class RDDMapSample {
 		
 		Logger.getLogger("org.apache").setLevel(Level.WARN);
 		
-		SparkConf conf = new SparkConf().setAppName("spark-sample")
-										.setMaster("local[*]");
+		SparkConf conf = new SparkConf().setAppName("spark-sample").setMaster("local[*]");
 		
 		JavaSparkContext sc = new JavaSparkContext(conf);
 		
@@ -32,10 +31,26 @@ public class RDDMapSample {
 		
 		JavaRDD<Double> rddSqrt = rddSample.map(value -> Math.sqrt(value));
 		
-		// It throws NotSerializableException
+		/**
+		 *  It throws NotSerializableException
+		 */
 		//rddSqrt.foreach(System.out::println);
 		
 		rddSqrt.collect().forEach(System.out::println);
+		
+		long items = rddSqrt.count();
+		
+		System.out.println(items);
+		
+		/**
+		 * Count can be a map and a reduce
+		 */
+		
+		JavaRDD<Long> rddMap = rddSqrt.map( value -> 1L);
+		
+		Long count = rddMap.reduce((value1,value2) -> value1 + value2 ); 
+		
+		System.out.println(count);
 		
 		sc.close();
 		
