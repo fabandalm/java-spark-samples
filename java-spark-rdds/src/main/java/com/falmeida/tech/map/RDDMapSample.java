@@ -1,4 +1,4 @@
-package com.falmeida.tech.reduce;
+package com.falmeida.tech.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,17 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
-public class RDDReduceSample {
+public class RDDMapSample {
 
 	public static void main(String[] args) {
 		
-		List<Double> inputData = new ArrayList<Double>();
-		inputData.add(15.00);
-		inputData.add(20.00);
-		inputData.add(25.00);
-		inputData.add(40.00);
-		inputData.add(50.00);
-		inputData.add(100.00);
+		List<Integer> inputData = new ArrayList<Integer>();
+		inputData.add(25);
+		inputData.add(64);
+		inputData.add(16);
+		inputData.add(4);
+		inputData.add(256);
+		inputData.add(1024);
 		
 		Logger.getLogger("org.apache").setLevel(Level.WARN);
 		
@@ -28,15 +28,17 @@ public class RDDReduceSample {
 		
 		JavaSparkContext sc = new JavaSparkContext(conf);
 		
-		JavaRDD<Double> rddSample = sc.parallelize(inputData);
+		JavaRDD<Integer> rddSample = sc.parallelize(inputData);
 		
-		Double result = rddSample.reduce((value1,value2) -> value1 + value2);
+		JavaRDD<Double> rddSqrt = rddSample.map(value -> Math.sqrt(value));
 		
-		System.out.println(result);
+		// It throws NotSerializableException
+		//rddSqrt.foreach(System.out::println);
+		
+		rddSqrt.collect().forEach(System.out::println);
 		
 		sc.close();
 		
 	}
 	
 }
-
