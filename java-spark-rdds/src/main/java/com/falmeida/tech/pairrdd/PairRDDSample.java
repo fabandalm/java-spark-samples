@@ -15,11 +15,11 @@ public class PairRDDSample {
 	public static void main(String[] args) {
 		
 		List<String> inputData = new ArrayList<String>();
-		inputData.add("WARN:2016-12-31 04:19:32");
-		inputData.add("FATAL:2016-12-31 03:22:34");
-		inputData.add("WARN:2016-12-31 03:21:21");
-		inputData.add("INFO:2015-4-21 14:32:21");
-		inputData.add("FATAL:2015-4-21 19:23:20");
+		inputData.add("WARN: 2016-12-31 04:19:32");
+		inputData.add("FATAL: 2016-12-31 03:22:34");
+		inputData.add("WARN: 2016-12-31 03:21:21");
+		inputData.add("INFO: 2015-4-21 14:32:21");
+		inputData.add("FATAL: 2015-4-21 19:23:20");
 		
 		Logger.getLogger("org.apache").setLevel(Level.WARN);
 		
